@@ -4,7 +4,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
-  <router-view> </router-view>
+  
 
   <peuPagina></peuPagina>
 
@@ -14,8 +14,21 @@ import peuPagina from './components/peuPagina.vue'
 import capcaleraC from './components/capcaleraC.vue'
 export default {
   name: "App",
-  components: { capcaleraC, peuPagina }
-}
+  components: { capcaleraC, peuPagina },
+  data() {
+    return {
+      diaList: {}
+    }
+  },
+  methods: {
+    getDia(){
+      axios.get("http://localhost/API/server.php")
+      .then(resultat =>  this.diaList = resultat.data)
+    }
+  },
+  created(){
+  }
+  }
 </script>
 
 <style>
