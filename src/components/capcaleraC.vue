@@ -1,10 +1,11 @@
 <template>
     <div id="capcaleraGeneral">
-        <div id="capLogo"></div>
-        <div id="capNomP"></div>
+        <img src="@/assets/LogoDefinitiu.png" id="capLogo">
+        <img src="@/assets/girotaskLletres.png" id="capNomP">
+        
         <div id="capInfoUsuari">
-            <div id="capNomUsuari">{{ nomUsuari }}</div>
-            <div id="capRolUsuari">{{ rolUsuari }}</div>
+            <div id="capNomUsuari">Nom: {{ nomUsuari }}</div>
+            <div id="capRolUsuari">Rol: {{ rolUsuari }}</div>
         </div>
     </div>
 </template>
@@ -14,27 +15,33 @@
 </script>
 
 <style>
-#capcaleraGeneral{
-    position: absolute;
-    top: 0%;
-    height: 9%;
-    width: 100%;
-    /* top: 91%; */
-    left: 0%;
-    background-color: #FE7373;
-}
-#capLogo{
+#capcaleraGeneral {
     position: relative;
-    height: 97%;
-    width: 5%;
-    left: 1%;
-    top: -2%;
-    background-image: url('../assets/LogoDefinitiu.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+    display: flex;
+    padding: 22px;
+    justify-content: space-between;
+    background: #FE7373;
+    color: white;
+    font-size: 25px;
 }
 
-#capNomP{
-    
+#capLogo {
+    position: relative;
+    height: 97%;
+    width: 7%;
+    font-size: 25px;
+}
+
+#capNomP {
+    position: relative;
+    height: 97%;
+    width: 15%;
+}
+
+#capInfoUsuari {
+    position: relative;
+    height: 97%;
+    width: 15%;
+    font-size: 25px;
 }
 </style>
