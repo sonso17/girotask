@@ -46,6 +46,7 @@ const routes = [
     component: ModificarTasca
   },
   {
+
     path: '/modificarUsuari',
     name: 'modificarUsuari',
     component: ModificarUsuari
