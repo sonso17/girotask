@@ -1,6 +1,6 @@
 <template>
     <div id="formCrearTascaGeneral">
-        <form style=" min-height: 100vh; width: 100%; height: 100vh; display: flex; flex-wrap: wrap;" action="">
+        <form method="POST" style=" min-height: 100vh; width: 100%; height: 100vh; display: flex; flex-wrap: wrap;" action="http://localhost/API/AaBbCc/crearTasca">
             <div id="container1">
             <label for="nomTasca" id="nomTascaTitol">Nom de la tasca</label>
             <input type="text" id="nomTasca" name="nomTasca">
@@ -12,13 +12,13 @@
                     <div style="display: flex;">
                             <div style="display:flex; flex-direction: column; ">
                                 <label for="">Usuari responsable</label>
-                                <select name="" id="">
-                                    <option value="Elvis">Elvis</option>
+                                <select name="Tecnic" id="">
+                                    <option value="1">Elvis</option>
                                 </select>
                             </div>
                             <div style="display:flex; flex-direction: column; ">
-                                <label for="">Prioritat</label>
-                                <select id="selectprioritat" name="Selectprioritat" >
+                                <label for="SelectPrioritat">Prioritat</label>
+                                <select id="selectprioritat" name="SelectPrioritat" >
                             <option value="1" selected>1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -33,16 +33,16 @@
                     </div>
                     <div style="display: flex;">
                             <div>
-                                <label for="">Status de la tasca</label>
-                                <select id="selectstatus" name="Selectstatus" >
-                            <option value="Fet" selected>Fet</option>
+                                <label for="SelectStatus">Status de la tasca</label>
+                                <select id="selectstatus" name="SelectStatus" >
+                            <option value="Fet">Fet</option>
                             <option value="En proces">En proces</option>
-                            <option value="Per fer">Per fer</option>
+                            <option value="Per fer" selected>Per fer</option>
                         </select>
                             </div>
                             <div>
-                                <label for="">Data Venciment</label>
-                                <input type="text" name="" id="">
+                                <label for="DataVenciment">Data Venciment</label>
+                                <input type="date" name="DataVenciment" id="">
                             </div>
                     </div>
                     <input type="submit" >

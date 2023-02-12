@@ -6,9 +6,10 @@
             <!-- <img src="tasques.png" alt="" class="icones"> -->
         </div>
         <div id="div-tasques">
-            <TascaLlista v-for="i in 5" :key="i">
+            <TascaLlista v-for="(tasca, i) in TasquesJSON" :key="i" :item="tasca">
 
             </TascaLlista>
+            <!-- {{ TasquesJSON }} -->
         </div>
 
         <div id="filtre"></div>
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-
+import axios from "axios";//importo axios
 import TascaLlista from '../components/TascaLlista.vue'
 export default {
     name: 'LlistaTasques',
@@ -26,10 +27,21 @@ export default {
         TascaLlista
     },
     data() {
-        return { checkboxdesplegable: false }
+        return {
+            checkboxdesplegable: false,
+            TasquesJSON: {},
+            // identificador: "1"
+        }
 
     },
     methods: {
+        getTasques() {
+            axios.get("http://localhost/API/AaBbCc/seleccionarTasquesUsuari/1")
+                .then(resultat => {
+                    this.TasquesJSON = resultat.data
+                    console.log(resultat.data)
+                });
+        },
         checkdesplegable() {
             if (!document.getElementById("checkdesplegable").checked)
                 document.getElementById("filtre").style.right = "-200px";
@@ -37,7 +49,11 @@ export default {
                 document.getElementById("filtre").style.right = "0px";
             }
         }
+    },
+    created(){
+        this.getTasques();
     }
+
 }
 </script>
 
@@ -47,6 +63,7 @@ export default {
     height: 50;
     margin: 5px
 }
+
 #divfondoLlistaTasques {
     opacity: 1;
     background-repeat: no-repeat;

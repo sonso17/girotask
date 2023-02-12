@@ -25,16 +25,11 @@
 
 // axios({
 //     method: 'get',
-//     url: `http://girotask.daw.institutmontilivi.cat`,
-//     // withCredentials: false,
-//     params: {
-//     //   access_token: SECRET_TOKEN,
-//     },
+//     url: `http://girotask.daw.institutmontilivi.cat/API/Login`,
 //   })
-//   .then(response => {
-//     // handle success
-//     console.log(response.data)
-//   })
+//   .then(
+//     console.log("hola")
+//   )
 //   .catch(error => {
 //     // handle error
 //     console.log(error)

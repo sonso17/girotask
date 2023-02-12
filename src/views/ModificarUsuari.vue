@@ -6,7 +6,7 @@
                     <div id="titol">Modifica d'usuari</div>
                     <div class="container1">
                         <div class="container2"><label for="">Nom d'usuari</label>
-                            <input type="text">
+                            <input type="text" name="nomUsuari">
                         </div>
                         <div class="container2">
                             <label for="">Cognom d'usuari</label>
