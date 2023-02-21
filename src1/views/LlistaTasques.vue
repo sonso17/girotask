@@ -2,8 +2,8 @@
    
     <div @click="barralateralPopout()" class="divfondoLlistaTasques"  >
         <div id="funcionalitats">
-            <img src="@/assets/Usuaris.png" alt=""  class="icones" @click="GotoUsuarisPag()">
-            <img src="@/assets/CrearTasca.png" alt=""   class="icones" @click="GotoCrearTasca()">
+            <img src="@/assets/Usuaris.png" alt=""  class="icones">
+            <img src="@/assets/CrearTasca.png" alt=""   class="icones">
         </div>
         <div id="div-tasques">
             <TascaLlista v-for="(tasca, i) in TasquesJSON" :key="i" :tasca="tasca">
@@ -13,26 +13,16 @@
         </div>
 
         <div id="filtre">
-
-            <label id="nomtitolfiltre"></label>
+            <button id="botoentrartasca">Entra a la tasca</button>
             <br>
             <br>
             <br>
-            <label id="nomfiltre"></label>
-            <br>
-            <br>
-            <br>
-            
-            <button id="botoentrartasca" @click="ModificarTasca()">Entra a la tasca</button>
-            <label id="hiddenid" hidden></label>
+            <label id="nomfiltre"> </label>
         </div>
     </div>
-   
-
 </template>
 
 <script>
-import router from "@/router";
 import axios from "axios";//importo axios
 import TascaLlista from '../components/TascaLlista.vue'
 export default {
@@ -44,40 +34,41 @@ export default {
         return {
             checkboxdesplegable: false,
             TasquesJSON: {},
-            idtascs: "",
-            // identificador: "1"
+            usuariJSON: {}
         }
 
     },
     methods: {
+        getUsuari(){
+            axios.get("http://localhost/API/xv4NotybJhmL9h53300gxRsBzwS84LkU7wUi28XB52CJM114jbNKUcy15Ky9fQ92/selectOneUser/1")
+                .then(resultat => {
+                    this.usuariJSON = resultat.data
+                    console.log(resultat.data)
+                    localStorage.setItem('Token', resultat.data);
+                });
+        },
         getTasques() {
-           var  tokenusuari =sessionStorage.getItem('tokenUsuari');
-            axios.get('http://localhost/API/'+ tokenusuari + '/seleccionarTasquesUsuari/'+ sessionStorage.getItem("IDUsuari"))
+            axios.get("http://localhost/API/xv4NotybJhmL9h53300gxRsBzwS84LkU7wUi28XB52CJM114jbNKUcy15Ky9fQ92/seleccionarTasquesUsuari/1")
                 .then(resultat => {
                     this.TasquesJSON = resultat.data
+                    console.log(resultat.data)
                 });
         },
         barralateralPopout() {
+            console.log("-210")
                 document.getElementById("filtre").style.right = "-200px";
-        },
-        ModificarTasca(){
-
-                    this.idtasca= document.getElementById("hiddenid").value,
+        }, 
+        extreureIDUsuari(){
+            // var idUsuari = this.$cookie.getCookie('usuariIDGT');
             
-               router.push("/modificarTasca/"+this.idtasca)
-        },
-        GotoUsuarisPag(){
-            router.push("/llistaUsuaris")
-        },
-        GotoCrearTasca(){
-            router.push("/crearTasca")
+            // console.log(idUsuari)
         }
-
     },
     created(){
         this.getTasques();
+        this.getUsuari();
+        this.extreureIDUsuari();
     }
-
 }
 </script>
 
@@ -85,9 +76,6 @@ export default {
 .icones {
     width: 50px;
     height: 50px;
-}
-.icones:hover{
-    cursor: pointer;
 }
 
 .divfondoLlistaTasques {
@@ -105,11 +93,6 @@ export default {
 }
 
 #filtre {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    align-items: center;
-
     position: fixed;
     width: 200px;
     height: 50%;
@@ -147,21 +130,7 @@ export default {
 
 /* Caldrar borrar el desplegable al final */
 
-#nomfiltre{
-    overflow-wrap: break-word;
-    width: 150px;
-    display: flex;
-    margin-left: 25px;
-}
-#nomtitolfiltre{
-    overflow-wrap: break-word;
-    width: 180px;
-    display: flex;
-    margin-left: 10px;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: 700;
-}
+
 
 
 #funcionalitats {
@@ -169,8 +138,6 @@ export default {
     height: 50px;
     margin: 10px;
     text-align: left;
-    display: flex;
-    justify-content: center;
 }
 
 #div-tasques {

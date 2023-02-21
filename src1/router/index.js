@@ -41,13 +41,13 @@ const routes = [
     component: VeureTasca
   },
   {
-    path: '/modificarTasca/:idtasca',
+    path: '/modificarTasca',
     name: 'modificarTasca',
     component: ModificarTasca
   },
   {
 
-    path: '/modificarUsuari/:idusuari',
+    path: '/modificarUsuari',
     name: 'modificarUsuari',
     component: ModificarUsuari
   }

@@ -1,10 +1,9 @@
 <template>
     <div id="llistaUsuarisGeneral">
-       
+        <br>
         <div id="llistaUsuarisTitol">Llista d'Usuaris:</div>
-        
-        <img src="@/assets/Usuaris.png" alt=""  class="icones" @click="GotoCrearUsuari()">
-
+        <br>
+        <br>
             <div id="titolsllistausuaris">
             
         <div id="NomUsuariT">Nom d'usuari:</div>
@@ -22,7 +21,6 @@
     </div>
 </template>
 <script>
-import router from "@/router";
 import infoUsuari from '../components/infoUsuari.vue'
 import axios from 'axios';
 export default {
@@ -38,14 +36,11 @@ export default {
     },
     methods: {
         getUsuaris() {
-            axios.get("http://localhost/API/"+ sessionStorage.tokenUsuari +"/getAllUsers")
+            axios.get("http://localhost/API/xv4NotybJhmL9h53300gxRsBzwS84LkU7wUi28XB52CJM114jbNKUcy15Ky9fQ92/getAllUsers")
                 .then(resultat => {
                     this.usuarisJSON = resultat.data
                     console.log(resultat.data)
                 });
-        },
-        GotoCrearUsuari(){
-            router.push("/registrar")
         }
     },
     created(){

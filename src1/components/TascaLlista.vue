@@ -1,5 +1,5 @@
 <template>
-    <div @click.stop="barralateralPopup(tasca.TascaID, tasca.Descripcio, tasca.Nom)" class="tasca" :id= "tasca.TascaID">
+    <div @click.stop="barralateralPopup()" class="tasca" :id= "tasca.TascaID">
         <div style="display:flex">
             <div class="marca"></div>
             <div class="titoltasca">{{ tasca.Nom }}</div>
@@ -29,11 +29,11 @@ export default {
     name: "veureTasca",
     props: ["tasca"],
     methods: {
-        barralateralPopup(id, descripcio , titol) {
+        barralateralPopup() {
             document.getElementById("filtre").style.right = "0px";
-            document.getElementById("nomfiltre").innerHTML = descripcio
-            document.getElementById("nomtitolfiltre").innerHTML = titol
-            document.getElementById("hiddenid").value = id
+            var id = document.getElementById(this).id;
+            console.log(id)
+            // document.getElementById("nomfiltre").innerHTML = ;
         }
     }
 }
@@ -80,7 +80,7 @@ export default {
 }
 .tasca:hover{
     cursor: pointer;
-    background-color: rgb(136, 136, 32);
+    background-color: rgba(136, 136, 32);
 }
 .titoltasca {
     width: 90%;

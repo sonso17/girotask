@@ -1,5 +1,5 @@
 <template>
-    <div @click="GoToUsuari(usuari.UsuariID)" class="infoUsuariGeneral" :id="usuari.UsuariID" >
+    <div id="infoUsuariGeneral">
         <div id="nomUsuari">{{ usuari.Nom }} {{ usuari.Cognom }}</div>
         <div id="emailUsuari">{{ usuari.Email }}</div>
         <div id="rolUsuari">{{ usuari.Rol }}</div>
@@ -8,22 +8,14 @@
     </div>
 </template>
 <script>
-import router from "@/router";
 export default{
     name: "infoUsuari",
-    props: ["usuari"],
-    methods: {
-        GoToUsuari(id) {
-            console.log(id)
-            // console.log(usuari)
-            router.push("/modificarUsuari/"+id)
-        }
-    }
+    props: ["usuari"]
 }
 </script>
 
 <style>
-.infoUsuariGeneral {
+#infoUsuariGeneral {
     background-color:  rgb(217, 217, 105);
     border: 1px solid black;
     height: 4%;
@@ -34,13 +26,13 @@ export default{
     display: flex;
     justify-content: space-around;
 }
-.infoUsuariGeneral:hover{
+#infoUsuariGeneral:hover{
     background-color: rgba(136, 136, 32) ;
     cursor: pointer;
 }
 @media only screen and (max-width: 1150px)
 {
-    .infoUsuariGeneral{
+    #infoUsuariGeneral{
         min-width: 1150px;
       width: 1110px;
     }

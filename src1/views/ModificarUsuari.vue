@@ -1,84 +1,74 @@
 <template>
+
     <div id="divfondoRegistre">
         <div id="containerRegistre">
+            <form id="lol" action="http://localhost/API/xv4NotybJhmL9h53300gxRsBzwS84LkU7wUi28XB52CJM114jbNKUcy15Ky9fQ92/modificarUsuari/1" method="post">
                 <div id="quadrat">
                     <div id="titol">Registre d'usuari</div>
                     <div class="container1">
                         <div class="container2"><label class="labelregistre" for="fnUsuari">Nom d'usuari</label>
-                            <input class="inputregistre" id="nomUsuari" type="text" name="fnUsuari">
+                            <input class="inputregistre" type="text" name="fnUsuari" >
                         </div>
                         <div class="container2">
                             <label class="labelregistre" for="lnUsuari">Cognom d'usuari</label>
-                            <input class="inputregistre" id="cognomUsuari" type="text" name="lnUsuari">
+                            <input class="inputregistre" type="text" name="lnUsuari">
                         </div>
                     </div>
                     <div class="container1">
                         <div class="container2"><label class="labelregistre" for="emailusuari">Correu de
                                 l'usuari</label>
-                            <input class="inputregistre" id="emailUsuari" type="text" name="emailUsuari">
+                            <input class="inputregistre" type="text" name="emailUsuari">
                         </div>
                         <div class="container2">
                             <label class="labelregistre" for="passwd">Contrassenya</label>
-                            <input class="inputregistre" id="passwd" type="text" name="passwd">
+                            <input class="inputregistre" type="text" name="passwd">
                         </div>
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center;">
-                        <select class="selectrol" id="selectRol" name="rolUsuari">
+                        <select class="selectrol" name="rolUsuari">
                             <option class="optionrol" value="Tecnic" selected>Tecnic</option>
                             <option class="optionrol" value="Admin">Admin</option>
                             <option class="optionrol" value="Gestor">Gestor</option>
                         </select>
                         <br>
                         <br>
-                        <button class="botochulo" id="botoregistrarusuari" @click="enviarDadesRegistre()"
-                            type="submit">Registrar </button>
+                        <div>
+                            <button class="botochulo" id="botoactualitzarusuari" type="submit">Actualitzar </button>
+                            <button class="botochulo" id="botoeliminarusuari" type="submit">Eliminar </button>
+                        </div>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-// import router from '@/router';
+import axios from 'axios';
 export default {
-    name: 'RegistreRegistre',
+    name: 'ModificarUsuari',
+    
     data() {
         return {
-            nomUsuari: "",
-            cognomUsuari: "",
-            emailUsuari: "",
-            passwd: "",
-            selectRol: ""
+            usuariJSON: {},
+            // identificador: "1"
         }
     },
     methods: {
-        enviarDadesRegistre() {
-            var dadesUsuari = { nomUsuari: this.nomUsuari, cognomUsuari: this.cognomUsuari, email: this.emailUsuari, passwd: this.passwd, rol: this.selectRol }
-            console.log(dadesUsuari)
-           
-            this.nomUsuari = document.getElementById("nomUsuari").value,
-            this.cognomUsuari = document.getElementById("cognomUsuari").value,
-            this.emailUsuari = document.getElementById("emailUsuari").value,
-            this.passwd = document.getElementById("passwd").value,
-            this.selectRol = document.getElementById("selectRol").value
-            axios.post('http://localhost/API/' + sessionStorage.tokenUsuari + '/registrar',
-                { data: { 
-                    "nomUsuari": this.nomUsuari,
-                    "cognomUsuari": this.cognomUsuari ,
-                    "emailUsuari": this.emailUsuari, 
-                    "passwd": this.passwd ,
-                    "selectRol": this.selectRol ,
-                    } 
-                }
-            ).then((response) => {
-               console.log(response);
-                // router.push('/LlistaTasques');
-            })
-        },
+        getUsuari() {
+            axios.get("http://localhost/API/xv4NotybJhmL9h53300gxRsBzwS84LkU7wUi28XB52CJM114jbNKUcy15Ky9fQ92/selectOneUser/1")
+                .then(resultat => {
+                    this.usuariJSON = resultat.data
+                    console.log(resultat.data)
+                });
+        }
+    },
+    created() {
+        this.getUsuari();
     }
 }
 </script>
+
 <style>
 body {
     margin: 0
@@ -201,8 +191,12 @@ body {
     src: url('@/assets/PORKYS_.TTF');
 }
 
-#botoregistrarusuari {
-    --c: rgb(249, 249, 143);
+#botoactualitzarusuari {
+    --c: rgb(170, 222, 255);
+}
+
+#botoeliminarusuari {
+    --c: rgb(255, 30, 0);
 }
 
 .botochulo {
