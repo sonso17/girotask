@@ -1,9 +1,9 @@
 <template>
    
     <div @click="barralateralPopout()" class="divfondoLlistaTasques"  >
-        <div id="funcionalitats">
-            <img src="@/assets/Usuaris.png" alt=""  class="icones" @click="GotoUsuarisPag()">
-            <img src="@/assets/CrearTasca.png" alt=""   class="icones" @click="GotoCrearTasca()">
+        <div  id="funcionalitats">
+            <img  v-if=" rol ==='Admin'" src="@/assets/Usuaris.png" alt=""  class="icones" @click="GotoUsuarisPag()">
+            <img v-if=" rol ==='Gestor' || rol==='Admin'" src="@/assets/CrearTasca.png" alt=""   class="icones" @click="GotoCrearTasca()">
         </div>
         <div id="div-tasques">
             <TascaLlista v-for="(tasca, i) in TasquesJSON" :key="i" :tasca="tasca">
@@ -45,30 +45,65 @@ export default {
             checkboxdesplegable: false,
             TasquesJSON: {},
             idtascs: "",
+            rol: sessionStorage.Rol
             // identificador: "1"
         }
 
     },
     methods: {
+        /*
+        Function: Gettasques()
+            funcio que agafa totes les tasques disponibles a l'usuari
+        */
         getTasques() {
            var  tokenusuari =sessionStorage.getItem('tokenUsuari');
-            axios.get('http://localhost/API/'+ tokenusuari + '/seleccionarTasquesUsuari/'+ sessionStorage.getItem("IDUsuari"))
+           if(sessionStorage.Rol ==="Tecnic")
+           {
+            axios.get('http://girotask.daw.institutmontilivi.cat/API/'+ tokenusuari + '/seleccionarTasquesUsuari/'+ sessionStorage.getItem("IDUsuari"))
                 .then(resultat => {
                     this.TasquesJSON = resultat.data
                 });
+           }
+           else{
+            axios.get('http://girotask.daw.institutmontilivi.cat/API/'+ tokenusuari + '/getAllTasks/')
+                .then(resultat => {
+                    this.TasquesJSON = resultat.data
+                });
+           }
+           
         },
+        /*
+        Function: barralateralPopout()
+        
+            funcio que desplaca la barra lateral a fora de la pantalla
+         */
         barralateralPopout() {
-                document.getElementById("filtre").style.right = "-200px";
+                document.getElementById("filtre").style.right = "-210px";
         },
+        /*
+        Function: ModificarTasca()
+        
+            funcio que agafa la id de la tasca i redirigeix a l'usuari al formulari de modificar tasca
+         */
         ModificarTasca(){
 
                     this.idtasca= document.getElementById("hiddenid").value,
             
                router.push("/modificarTasca/"+this.idtasca)
         },
+         /*
+        Function: GotoUsuarisPag()
+        
+            funcio  redirigeix a l'usuari a la llista d'usuaris 
+         */
         GotoUsuarisPag(){
             router.push("/llistaUsuaris")
         },
+         /*
+        Function: GotoCrearTasca()
+        
+            funcio redirigeix a l'usuari al formulari de crear tasca
+         */
         GotoCrearTasca(){
             router.push("/crearTasca")
         }
@@ -92,7 +127,7 @@ export default {
 
 .divfondoLlistaTasques {
     opacity: 1;
-    background: url('https://s27363.pcdn.co/wp-content/uploads/2016/10/Girona-Spain-1.jpg.optimal.jpg');
+    background: url('@/assets/backgroundGirona.png');
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -101,6 +136,7 @@ export default {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
+    overflow-y: hidden;
     min-height: 100vh;
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div @click="GoToUsuari(usuari.UsuariID)" class="infoUsuariGeneral" :id="usuari.UsuariID" >
-        <div id="nomUsuari">{{ usuari.Nom }} {{ usuari.Cognom }}</div>
-        <div id="emailUsuari">{{ usuari.Email }}</div>
+        <div id="infonomUsuari">{{ usuari.Nom }} {{ usuari.Cognom }}</div>
+        <div id="infoemailUsuari">{{ usuari.Email }}</div>
         <div id="rolUsuari">{{ usuari.Rol }}</div>
         <div id="ApiKeyUsuari">{{ usuari.ApiKey }}</div>
         <div id="IdUsuari">{{ usuari.UsuariID }}</div>
@@ -13,9 +13,16 @@ export default{
     name: "infoUsuari",
     props: ["usuari"],
     methods: {
+        /*
+        Function: GoToUsuari()
+
+            Funcio que redirigeix al registre de modificar usuari
+        
+        Parameters:
+
+            id - id de l'usuari
+        */
         GoToUsuari(id) {
-            console.log(id)
-            // console.log(usuari)
             router.push("/modificarUsuari/"+id)
         }
     }
@@ -46,11 +53,11 @@ export default{
     }
 }
 
-#nomUsuari {
+#infonomUsuari {
     width:15%
 }
 
-#emailUsuari {
+#infoemailUsuari {
     width:20%
 }
 

@@ -1,15 +1,15 @@
 <template>
   <div id="divfondoLogIn">
     <div id="containerLogIn">
-      <div style="margin-top:15px;font-size: 2em; font-weight: 700;">GiroTask</div>
+      <div style="margin-top:15px;font-size: 2em; font-weight: 700; font-family: porkys;">GiroTask</div>
       <div style="display: flex; flex-direction: column;">
         <label class="labelLogin" for="emailUsuari">Correu</label>
-          <input class="inputlogin" id="emailUsuariinput" v-model="emailUsuari" type="text" name="emailUsuari">
+          <input class="inputlogin" id="emailUsuariinput" v-model="emailUsuari" type="email" name="emailUsuari">
           <br>
           <br>
           <label class="labelLogin" for="passwd">Contrassenya</label>
           <br>
-          <input class="inputlogin" id="passwdinput" v-model="passwd" type="text" name="passwd">
+          <input class="inputlogin" type="password" id="passwdinput" v-model="passwd"  name="passwd">
           <br>
           <br>
           <button id="buttonlogin" @click="enviarDadesLogIn()" value="Log In">Log in</button>
@@ -31,36 +31,38 @@ export default {
     }
   },
   methods: {
+    /*
+    Function: getTokenConvidat()
+
+      Funcio que demana un token convidat al servidor i li dona al client
+     */
     getTokenConvidat() {
-      axios.get("http://localhost/API/TokenConvidat")
+      axios.get("http://girotask.daw.institutmontilivi.cat/API/TokenConvidat")
         .then(resultat => {
           this.tokenJSON = resultat.data
           sessionStorage.setItem('TokenConvidat', resultat.data);
         });
     },
+
+    /*
+    Function: enviarDadesLogIn()
+      Funcio que envia les dades de login al servidor per logar a l'usuari
+    */
     enviarDadesLogIn() {
-      // var credencialsUsuari = { email: this.emailUsuari, passwd: this.passwd }
-      // console.log(credencialsUsuari)
       this.emailUsuari = document.getElementById("emailUsuariinput").value;
       this.passwd = document.getElementById("passwdinput").value;
 
-      console.log("email: " + this.emailUsuari + " Passwd: " + this.passwd)
-      axios.post('http://localhost/API/'+ this.tokenJSON +'/LogIn' ,
+      axios.post('http://girotask.daw.institutmontilivi.cat/API/'+ this.tokenJSON +'/LogIn' ,
       { data: { "emailUsuari": this.emailUsuari, "passwd": this.passwd }}
       ).then((response)=>{
         sessionStorage.setItem('tokenUsuari', response.data[0].Token);
-        console.log(response)
         sessionStorage.setItem('usuari', response.data[0].Nom);
         sessionStorage.setItem('Rol', response.data[0].Rol);
         sessionStorage.setItem('IDUsuari', response.data[0].UsuariID);
 
-        // var tokenusuari = response.data[0].Token
         document.getElementById("capNomUsuari").innerHTML= sessionStorage.getItem('usuari', response.data[0].Nom);
     document.getElementById("capRolUsuari").innerHTML=  sessionStorage.getItem('Rol', response.data[0].Rol);
-        router.push(  
-  '/LlistaTasques');
-        // console.log(response.data[0].Token);
-        // console.log(tokenusuari)
+        router.push('/LlistaTasques');
       })
 
     },
@@ -76,9 +78,14 @@ export default {
 
 <style>
 
+@font-face {
+    font-family: porkys;
+    src: url('@/assets/PORKYS_.TTF');
+}
+
 #divfondoLogIn {
   opacity: 1;
-  background: url('https://s27363.pcdn.co/wp-content/uploads/2016/10/Girona-Spain-1.jpg.optimal.jpg');
+  background: url('@/assets/backgroundGirona.png');
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -118,13 +125,16 @@ export default {
 
 #buttonlogin {
   background-color: salmon;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  height: 2rem;
-  width: 40%;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  cursor: pointer;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    height: 2rem;
+    width: 40%;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    left: 30%;
+    top: 83%;
+    position: absolute;
 }
 </style>

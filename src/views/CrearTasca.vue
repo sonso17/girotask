@@ -5,12 +5,12 @@
                 <div style="display: flex; flex-direction: column">
                     <label for="nomTasca" id="nomTascaTitol" class="labelcreartasca">Nom de la tasca</label>
                     <br /><br />
-                    <input type="text" id="nomTasca" v-model="nomTasca" name="nomTasca" />
+                    <input type="text" id="NomTasca" v-model="nomTasca" name="nomTasca" />
                 </div>
                 <div style="height: 70%">
                     <label for="descripcioTasca" id="descripcioTascaTitol" class="labelcreartasca">Descripcio de la
                         tasca</label>
-                    <input type="text" id="descripcioTasca" v-model="descripcioTasca" name="descripcioTasca" />
+                    <textarea type="text"  id="descripcioTasca" v-model="descripcioTasca" name="descripcioTasca" ></textarea>
                 </div>
             </div>
             <div id="container2creartasca">
@@ -20,7 +20,11 @@
                             <label class="labelformularicreartasca" for="">Usuari responsable</label>
                             <br />
                             <select class="selectcreartasca" v-model="usuariResponsable" name="Tecnic" id="usuariResponsablecreartasca">
-                                <option value="1">Elvis</option>
+                                <!-- <option value="1">Elvis</option> -->
+                                <usuariLlista v-for="(usuari, i) in this.usuarisJSON" :key="i" :usuari="usuari">
+
+                                </usuariLlista>
+                                
                             </select>
                         </div>
                         <div style="display: flex; flex-direction: column">
@@ -69,8 +73,12 @@
 <script>
 import axios from 'axios'
 import router from '@/router';
+import usuariLlista from '@/components/usuariLlista.vue'
 export default {
     name: 'crearTasca',
+    components: {
+        usuariLlista
+    },
     data() {
         return {
             nomTasca: "",
@@ -78,39 +86,56 @@ export default {
             usuariResponsable: "",
             prioritatTasca: "",
             statusTasca: "",
-            dataVenciment: ""
+            dataVenciment: "",
+            usuarisJSON: {}
         }
     },
     methods: {
 
+    /*
+    Function: enviarCrearTasca
+    
+        Funcio que agafa les dades del formulari i llença una peticio axios a la API
+    
+    */
         enviarCrearTasca() 
         {
-            // var credencialsUsuari = { email: this.emailUsuari, passwd: this.passwd }
-            // console.log(credencialsUsuari)
-            this.nomTasca = document.getElementById("nomTasca").value;
-            this.descripcioTasca = document.getElementById("descripcioTasca").value;
-            this.usuariResponsable = document.getElementById("usuariResponsablecreartasca").value;
-            this.prioritatTasca = document.getElementById("selectprioritat").value;
-            this.statusTasca = document.getElementById("selectstatus").value;
-            this.dataVenciment = document.getElementById("inputformularicreartasca").value;
+            // this.nomTasca = document.getElementById("nomTasca").value;
+            // this.descripcioTasca = document.getElementById("descripcioTasca").value;
+            // this.usuariResponsable = document.getElementById("usuariResponsablecreartasca").value;
+            // this.prioritatTasca = document.getElementById("selectprioritat").value;
+            // this.statusTasca = document.getElementById("selectstatus").value;
+            // this.dataVenciment = document.getElementById("inputformularicreartasca").value;
 
-            // console.log("email: " + this.emailUsuari + " Passwd: " + this.passwd)
 
-            axios.post('http://localhost/API/' + sessionStorage.tokenUsuari + '/crearTasca',
+            axios.post('http://girotask.daw.institutmontilivi.cat/API/' + sessionStorage.tokenUsuari + '/crearTasca',
                 { data: { 
-                    "nomTasca": this.nomTasca,
-                    "descripcioTasca": this.descripcioTasca ,
-                    "usuariResponsable": this.usuariResponsable, 
-                    "prioritatTasca": this.prioritatTasca ,
-                    "statusTasca": this.statusTasca ,
-                    "dataVenciment": this.dataVenciment 
+                    nomTasca: this.nomTasca,
+                    descripcioTasca: this.descripcioTasca ,
+                    usuariResponsable: this.usuariResponsable, 
+                    prioritatTasca: this.prioritatTasca ,
+                    statusTasca: this.statusTasca ,
+                    dataVenciment: this.dataVenciment 
                     } 
                 }
-            ).then((response) => {
-               console.log(response);
+            ).then(() => {
                 router.push('/LlistaTasques');
             })
         },
+        /*
+        Function: getUsuaris
+            Funcio que llista els usuaris en un select
+        */
+        getUsuaris(){
+            var  tokenusuari =sessionStorage.getItem('tokenUsuari');
+            axios.get('http://girotask.daw.institutmontilivi.cat/API/'+ tokenusuari + '/getAllUsers')
+                .then(resultat => {
+                    this.usuarisJSON = resultat.data
+                });
+        }
+    },
+    created(){
+        this.getUsuaris()
     }
 }
 </script>
@@ -119,7 +144,7 @@ export default {
 @media (min-width: 816px) {
     #formCrearTascaGeneralcreartasca {
         opacity: 1;
-        background: url("https://s27363.pcdn.co/wp-content/uploads/2016/10/Girona-Spain-1.jpg.optimal.jpg");
+        background: url('@/assets/backgroundGirona.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -137,12 +162,7 @@ export default {
         /* flex-direction: column; */
     }
 }
-
-
-
-          
-           
-           
+    
 @media (max-width: 816px) {
     #formCrearTascaGeneralcreartasca {
         opacity: 1;
@@ -192,6 +212,17 @@ export default {
 #nomTascaTitol {
     /* position: absolute; */
     left: 0%;
+    font-family: porkys;
+    color: black;
+}
+
+#descripcioTascaTitol{
+    color: black;
+}
+
+@font-face {
+    font-family: porkys;
+    src: url('@/assets/PORKYS_.TTF');
 }
 
 #formulari {
@@ -208,9 +239,12 @@ export default {
 
 .labelcreartasca {
     /* background-color: yellow; */
-    color: white;
+    /* color: white; */
     font-size: 2em;
     font-weight: 1000;
+    font-family: porkys;
+    color: black;
+
 }
 
 #NomTasca {
@@ -231,6 +265,8 @@ export default {
     min-width: 300px;
     height: 60%;
     min-width: 300px;
+    text-align: left;
+    resize:none;    
 }
 
 .labelformularicreartasca {

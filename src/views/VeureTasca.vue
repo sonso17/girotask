@@ -39,7 +39,7 @@ export default{
 <style>
 #veureTascaGeneral {
     opacity: 1;
-    background: url('https://s27363.pcdn.co/wp-content/uploads/2016/10/Girona-Spain-1.jpg.optimal.jpg');
+    background: url('@/assets/backgroundGirona.png');
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;

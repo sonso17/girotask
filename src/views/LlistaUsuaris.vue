@@ -3,7 +3,7 @@
        
         <div id="llistaUsuarisTitol">Llista d'Usuaris:</div>
         
-        <img src="@/assets/Usuaris.png" alt=""  class="icones" @click="GotoCrearUsuari()">
+        <img src="@/assets/useradd.png" alt=""  class="icones" @click="GotoCrearUsuari()">
 
             <div id="titolsllistausuaris">
             
@@ -37,13 +37,22 @@ export default {
         }
     },
     methods: {
+        /*
+        Function: getUsuaris()
+
+            funcio que llista tots els usuaris en pantalla
+        */
         getUsuaris() {
-            axios.get("http://localhost/API/"+ sessionStorage.tokenUsuari +"/getAllUsers")
+            axios.get("http://girotask.daw.institutmontilivi.cat/API/"+ sessionStorage.tokenUsuari +"/getAllUsers")
                 .then(resultat => {
                     this.usuarisJSON = resultat.data
-                    console.log(resultat.data)
                 });
         },
+        /*
+        Function: GotoCrearUsuari()
+
+            funcio que redirigeix al formulari de crear usuari
+        */
         GotoCrearUsuari(){
             router.push("/registrar")
         }
@@ -58,12 +67,12 @@ export default {
 <style>
 #llistaUsuarisGeneral {
     opacity: 1;
-    background: url('https://s27363.pcdn.co/wp-content/uploads/2016/10/Girona-Spain-1.jpg.optimal.jpg');
+    background: url('@/assets/backgroundGirona.png');
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
     width: 100%;
-    height: 700px;
+    height: 100vh;
     justify-content: space-evenly;
     text-align: center;
     align-items: center;
@@ -82,6 +91,11 @@ export default {
 #llistaUsuarisTitol {
     /* background-color: red; */
     font-size: 36px;
+    font-family: porkys;
+}
+@font-face {
+    font-family: porkys;
+    src: url('@/assets/PORKYS_.TTF');
 }
 
 #NomUsuariT {
@@ -93,7 +107,8 @@ export default {
 
 #emailUsuariT {
     font-size: 27px;
-    width:25%
+    width:25%;
+    
 }
 
 
